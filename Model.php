@@ -1,50 +1,19 @@
 <?php
 
-/**
- * Core Framework - IndustriesModel
- *
- * @license    MIT (https://mit-license.org/)
- * @author     Louis Ouellet <louis@laswitchtech.com>
- */
-
 // Import additionnal class into the global namespace
-use \LaswitchTech\Core\Abstracts\Model;
+use \LaswitchTech\Core\Base\BaseModel;
 
-class IndustriesModel extends Model {
+class IndustriesModel extends BaseModel {
 
     /**
-     * Create an industry
-     *
-     * @param string $industry
-     * @return int
+     * Constructor
      */
-    public function create(string $industry): int
+    public function __construct()
     {
-        // Check if the industry is empty
-        if(empty($industry)){
-            return 0;
-        }
+        // Call the parent constructor
+        parent::__construct();
 
-        // Create a select Query
-        $Query = $this->Database->query()
-            ->table('industries')
-            ->select('id')
-            ->where('name', $industry);
-
-        // Retrieve the Results
-        $result = $Query->fetch();
-
-        // Check if the Industry already exists
-        if($result){
-            return $result[0]['id'];
-        }
-
-        // Create the Query
-        $Query = $this->Database->query()
-            ->table('industries')
-            ->insert(['name' => $industry]);
-
-        // Execute the Query
-        return $Query->execute();
+        // Initialize the Model
+        $this->init('industries');
     }
 }
